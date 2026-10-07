@@ -21,36 +21,36 @@ variable "ssh_password" {
 source "qemu" "rocky9-stig" {
   qemu_binary      = "/usr/libexec/qemu-kvm"
   iso_url          = "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9-latest-x86_64-boot.iso"
-  iso_checksum     = "file:https://download.rockylinux.org/pub/rocky/9/isos/x86_64/CHECKSUM"[cite: 9]
-  output_directory = "build-output"[cite: 9]
-  format           = "qcow2"[cite: 9]
-  disk_size        = "30000M"[cite: 9]
-  accelerator      = "kvm"[cite: 9]
-  http_directory   = "http"[cite: 9]
-  boot_command     = ["<tab> inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"][cite: 9]
-  boot_wait        = "10s"[cite: 9]
-  ssh_username     = var.ssh_username[cite: 9]
-  ssh_password     = var.ssh_password[cite: 9]
-  ssh_timeout      = "45m"[cite: 9]
+  iso_checksum     = "file:https://download.rockylinux.org/pub/rocky/9/isos/x86_64/CHECKSUM"
+  output_directory = "build-output"
+  format           = "qcow2"
+  disk_size        = "30000M"
+  accelerator      = "kvm"
+  http_directory   = "http"
+  boot_command     = ["<tab> inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"]
+  boot_wait        = "10s"
+  ssh_username     = var.ssh_username
+  ssh_password     = var.ssh_password
+  ssh_timeout      = "45m"
 
   qemuargs = [
-    ["-m", "2048M"],[cite: 9]
-    ["-smp", "2"],[cite: 9]
-    ["-cpu", "host"][cite: 9]
+    ["-m", "2048M"],
+    ["-smp", "2"],
+    ["-cpu", "host"]
   ]
 }
 
 build {
-  sources = ["source.qemu.rocky9-stig"][cite: 9]
+  sources = ["source.qemu.rocky9-stig"]
 
   provisioner "shell" {
-    execute_command = "echo '${var.ssh_password}' | sudo -S env {{ .Vars }} bash {{ .Path }}"[cite: 9]
+    execute_command = "echo '${var.ssh_password}' | sudo -S env {{ .Vars }} bash {{ .Path }}"
     inline = [
-      "dnf clean all",[cite: 9]
-      "rm -rf /etc/ssh/ssh_host_*",[cite: 9]
-      "truncate -s 0 /etc/machine-id",[cite: 9]
-      "rm -f /var/lib/systemd/random-seed",[cite: 9]
-      "cloud-init clean --logs"[cite: 9]
+      "dnf clean all",
+      "rm -rf /etc/ssh/ssh_host_*",
+      "truncate -s 0 /etc/machine-id",
+      "rm -f /var/lib/systemd/random-seed",
+      "cloud-init clean --logs"
     ]
   }
 }
