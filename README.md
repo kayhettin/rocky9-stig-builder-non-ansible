@@ -1,4 +1,4 @@
-# Rocky Linux 9 STIG Image Builder
+# Rocky Linux 9 STIG Image Builder (Non-Ansible)
 
 ## Architecture & Objective Overview
 This repository provides automated, Infrastructure-as-Code (IaC) pipelines to generate DISA STIG-compliant Rocky Linux 9 machine images. Utilizing HashiCorp Packer, QEMU, and Kickstart files integrated with the OpenSCAP Anaconda add-on, this pipeline bakes the DISA STIG profile directly into the OS at install time[cite: 1]. The output is a fully generalized `.qcow2` image for air-gapped Proxmox virtual environments and a custom self-contained ISO for baremetal UEFI deployments[cite: 3, 11].
