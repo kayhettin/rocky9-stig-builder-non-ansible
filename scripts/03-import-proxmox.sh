@@ -20,15 +20,15 @@ if qm status "${VM_ID}" &> /dev/null; then
 fi
 
 echo "Creating empty VM..."
-qm create "${VM_ID}" --name "${VM_NAME}" --memory 2048 --net0 virtio,bridge=vmbr0[cite: 9]
+qm create "${VM_ID}" --name "${VM_NAME}" --memory 2048 --net0 virtio,bridge=vmbr0
 
 echo "Importing disk..."
-qm importdisk "${VM_ID}" "${IMAGE_PATH}" "${STORAGE_POOL}"[cite: 9]
+qm importdisk "${VM_ID}" "${IMAGE_PATH}" "${STORAGE_POOL}"
 
 echo "Configuring hardware and Cloud-Init..."
-qm set "${VM_ID}" --scsihw virtio-scsi-pci --scsi0 "${STORAGE_POOL}:vm-${VM_ID}-disk-0"[cite: 9]
-qm set "${VM_ID}" --ide2 "${STORAGE_POOL}:cloudinit"[cite: 9]
-qm set "${VM_ID}" --boot c --bootdisk scsi0[cite: 9]
+qm set "${VM_ID}" --scsihw virtio-scsi-pci --scsi0 "${STORAGE_POOL}:vm-${VM_ID}-disk-0"
+qm set "${VM_ID}" --ide2 "${STORAGE_POOL}:cloudinit"
+qm set "${VM_ID}" --boot c --bootdisk scsi0
 
 echo "Converting to template..."
-qm template "${VM_ID}"[cite: 9]
+qm template "${VM_ID}"
